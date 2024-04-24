@@ -13,6 +13,7 @@ import play.api.test._
  *
  * For more information, see https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
  */
+
 class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuite {
 
   val controllerComponents: ControllerComponents = Helpers.stubControllerComponents()
