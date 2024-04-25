@@ -5,7 +5,7 @@ GET     /                           controllers.HomeController.index()
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 # app route that references the new controller and method
-GET     /api        controllers.ApplicationController.index
+GET     /api        controllers.ApplicationController.index()
 
 GET     /create/      controllers.ApplicationController.create()
 GET     /read/:id      controllers.ApplicationController.read(id:String)
