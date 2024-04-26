@@ -17,9 +17,7 @@ import scala.concurrent.{ExecutionContext, Future}
 // This class contains values necessary in most frontend controllers, such as multi-language support.
 @Singleton
 class ApplicationController @Inject() (val controllerComponents: ControllerComponents, val dataRepository: DataRepository, implicit val ec: ExecutionContext) extends BaseController{
-//  val bookOne = DataModel(_id = "id1", name = "Book name", description = "Author name", pageCount = 10)
-//  val booktwo = DataModel(_id = "id1", name = "Book name", description = "Author name", pageCount = 10)
-//  val listtt = Seq(bookOne,booktwo)
+
   def index(): Action[AnyContent] = Action.async { implicit request =>
     dataRepository.index().map{
       case Right(item: Seq[DataModel]) => Ok {Json.toJson(item)}
@@ -51,7 +49,8 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
 
   def read(id:String) = Action.async { implicit request =>
     dataRepository.read(id).map{
-      item: DataModel => Ok {Json.toJson(item)}
+      case Right(item) => Ok {Json.toJson(item)}
+      case Left(error) => BadRequest{Json.toJson("Unable to find any books") + error}
     }
   }
 
@@ -65,7 +64,8 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
 
   def delete(id:String) = Action.async{ implicit request =>
     dataRepository.delete(id).map {
-      _ => Accepted
+      case Right(item) => Accepted("Book deleted successfully.")
+      case Left(_) => BadRequest
     }
 
   }

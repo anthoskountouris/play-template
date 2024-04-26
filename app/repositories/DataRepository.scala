@@ -5,6 +5,7 @@ import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.Filters.empty
 import org.mongodb.scala.model._
 import org.mongodb.scala.{FindObservable, result}
+import play.api.libs.json
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
@@ -13,9 +14,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DataRepository @Inject()(
-                                mongoComponent: MongoComponent
-                              )(implicit ec: ExecutionContext) extends PlayMongoRepository[DataModel](
+class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: ExecutionContext) extends PlayMongoRepository[DataModel](
   collectionName = "dataModels",
   mongoComponent = mongoComponent,
   domainFormat = DataModel.formats,
@@ -32,21 +31,32 @@ class DataRepository @Inject()(
    */
 ) {
 
-  def index(): Future[Either[Int, Seq[DataModel]]]  =
-    collection.find().toFuture().map{
+  /*
+  .find() returns a FindObservable, which is capable of returning multiple documents as the
+  result of the query. This is akin to getting a cursor that can iterate over multiple results.
+   */
+
+  def index(): Future[Either[Int, Seq[DataModel]]] =
+    collection.find().toFuture().map {
       case books: Seq[DataModel] => Right(books)
       case _ => Left(404)
     }
 
+  /*
+  .first() is a method on FindObservable that modifies the behavior of the query such
+  that only the first document that matches the query is returned. If no documents match,
+  the result will be null.
+   */
+
   def create(book: DataModel): Future[Either[JsValue, DataModel]] = {
-    collection.find(byID(book._id)) match {
-      case bk:DataModel => Future(Left(Json.toJson(s"The book with the id: ${bk._id} already exists.")))
+    collection.find(byID(book._id)).first().toFuture() flatMap  {
+      case bk: DataModel => Future(Left(Json.toJson(s"The book with the id: ${bk._id} already exists.")))
       case _ => collection
         .insertOne(book)
         .toFuture()
         .map(_ => Right(book))
-      }
     }
+  }
 
 
   private def byID(id: String): Bson =
@@ -54,27 +64,54 @@ class DataRepository @Inject()(
       Filters.equal("_id", id)
     )
 
-  def read(id: String): Future[DataModel] =
+  def read(id: String): Future[Either[JsValue,DataModel]] =
     collection.find(byID(id)).headOption flatMap {
       case Some(data) =>
-        Future(data)
+        Future(Right(data))
+      case None => Future(Left(Json.toJson(s"The book with the id: ${id} already exists.")))
     }
 
-  def update(id: String, book: DataModel): Future[result.UpdateResult] =
+//  def read(id: String): Future[Either[JsValue, DataModel]] =
+//    collection.find(byID(id)).headOption flatMap {
+//      case Some(data) =>
+//        Future(Right(data))
+//      case None => Future(Left(Json.toJson(s"The book with the id: ${id} already exists.")))
+//    }
+
+//    def update(id: String, book: DataModel): Future[Either[json.JsValue, result.UpdateResult]] =
+//      collection.find(byID(book._id)) match {
+//        case bk: DataModel => collection.replaceOne(
+//          filter = byID(id),
+//          replacement = book,
+//          options = new ReplaceOptions().upsert(true) //What happens when we set this to false?
+//        ).toFuture().map(result => Right(result)).recover{case _ => Left(Json.toJson(s"The book with the id: ${id} already exists."))}
+//      }
+
+  def update(id: String, book:DataModel): Future[result.UpdateResult] =
     collection.replaceOne(
       filter = byID(id),
       replacement = book,
-      options = new ReplaceOptions().upsert(true) //What happens when we set this to false?
+      options = new ReplaceOptions().upsert(true)
     ).toFuture()
 
-  def delete(id: String): Future[result.DeleteResult] =
-    collection.deleteOne(
-      filter = byID(id)
-    ).toFuture()
+
+  /*
+  DataModel if bk != null ensures that a valid DataModel object was returned.
+  Comparing directly against DataModel won't work if find returns null when no
+  document is found, hence the if book != null guard
+   */
+
+  def delete(id: String): Future[Either[JsValue, result.DeleteResult]] =
+    collection.find(byID(id)).first().toFuture() flatMap  {
+      case bk: DataModel if bk != null => collection.deleteOne(
+        filter = byID(id)
+      ).toFuture().map(deleteResult => Right(deleteResult))
+      case _ => Future(Left(Json.toJson(s"No book found with the id: ${id}.")))
+    }
 
   def deleteAll(): Future[Unit] = collection.deleteMany(empty()).toFuture().map(_ => ()) //Hint: needed for tests
 
-  /*
+      /*
   Each of these methods correspond to a CRUD function.
   create() adds a DataModel object to the database
   read() retrieves a DataModel object from the database. It uses an id parameter to find the data its looking for

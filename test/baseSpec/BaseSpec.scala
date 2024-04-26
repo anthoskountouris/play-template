@@ -25,6 +25,8 @@ trait BaseSpecWithApplication extends BaseSpec with GuiceOneServerPerSuite with 
   implicit val mat: Materializer = app.materializer
   implicit val executionContext: ExecutionContext = app.injector.instanceOf[ExecutionContext]
 
+  // component and repository are created instances of the controller components and data repository,
+  // note that new instances will be made for each suite ran
   lazy val component: MessagesControllerComponents = injector.instanceOf[MessagesControllerComponents]
   lazy val repository: DataRepository = injector.instanceOf[DataRepository]
 
@@ -34,6 +36,7 @@ trait BaseSpecWithApplication extends BaseSpec with GuiceOneServerPerSuite with 
   implicit val messagesApi = app.injector.instanceOf[MessagesApi]
   lazy val injector: Injector = app.injector
 
+  // fakeRequest and fakeApplication use Guice to help construct an instance of the application being called
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(Map(
@@ -45,6 +48,8 @@ trait BaseSpecWithApplication extends BaseSpec with GuiceOneServerPerSuite with 
     FakeRequest("", "").withCSRFToken.asInstanceOf[FakeRequest[AnyContentAsEmpty.type]]
   implicit val messages: Messages = messagesApi.preferred(fakeRequest)
 
+
+//  Similarly, buildPost and buildGet are methods we can use in the tests to pass fake requests to the controller
   def buildPost(url: String): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(POST, url).withCSRFToken.asInstanceOf[FakeRequest[AnyContentAsEmpty.type]]
 
