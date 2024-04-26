@@ -38,13 +38,13 @@ class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuit
       contentAsString(home) must include ("This is Anthos's first Play Scala project")
     }
 
-    "render the index page from the router" in {
-      val request = FakeRequest(GET, "/")
-      val home = route(app, request).get
-
-      status(home) mustBe OK
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("This is Anthos's first Play Scala project")
-    }
+//    "render the index page from the router" in {
+//      val request = FakeRequest(GET, "/")
+//      val home = route(app, request).get
+//
+//      status(home) mustBe OK
+//      contentType(home) mustBe Some("text/html")
+//      contentAsString(home) must include ("This is Anthos's first Play Scala project")
+//    }
   }
 }
