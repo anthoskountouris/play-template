@@ -29,13 +29,19 @@
         </thead>
         <tbody>
         <tr>
-          <th scope="row">/api</th>
+          <th scope="row">/</th>
           <td><code>GET</code></td>
           <td>None</td>
           <td>N/A</td>
         </tr>
+          <tr>
+            <th scope="row">/api</th>
+            <td><code>GET</code></td>
+            <td>None</td>
+            <td>N/A</td>
+          </tr>
         <tr>
-          <th scope="row">/api</th>
+          <th scope="row">/create</th>
           <td><code>POST</code></td>
           <td>Content-Type: application/json</td>
           <td><code>
@@ -45,17 +51,17 @@
             <br>
             "description" : String
             <br>
-            "numSales" : Int
+            "pageCount" : Int
           </code></td>
         </tr>
         <tr>
-          <th scope="row">/api/:id</th>
+          <th scope="row">/read/:id</th>
           <td><code>GET</code></td>
           <td>None</td>
           <td>N/A</td>
         </tr>
         <tr>
-          <th scope="row">/api/:id</th>
+          <th scope="row">/update/:id</th>
           <td><code>PUT</code></td>
           <td>Content-Type: application/json</td>
           <td><code>
@@ -65,11 +71,11 @@
             <br>
             "description" : String
             <br>
-            "numSales" : Int
+            "pageCount" : Int
           </code></td>
         </tr>
         <tr>
-          <th scope="row">/api/:id</th>
+          <th scope="row">/delete/:id</th>
           <td><code>DELETE</code></td>
           <td>Content-Type: application/json</td>
           <td>N/A</td>

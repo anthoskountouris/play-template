@@ -50,7 +50,7 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
   def read(id:String) = Action.async { implicit request =>
     dataRepository.read(id).map{
       case Right(item) => Ok {Json.toJson(item)}
-      case Left(error) => BadRequest{Json.toJson("Unable to find any books") + error}
+      case Left(_) => BadRequest{Json.toJson("Unable to find that book")}
     }
   }
 

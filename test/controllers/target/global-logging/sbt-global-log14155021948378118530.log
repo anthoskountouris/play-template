@@ -1,0 +1,309 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly *ApplicationControllerSpec, Some(4e47ff36-2912-46e2-a749-929d8adc15fb), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / testOnly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 2 Scala sources to /Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/target/scala-2.12/classes ...[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:2:8: not found: object akka[0m
+[0m[[0m[31merror[0m] [0m[0mimport akka.util.ByteString[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:3:8: not found: object baseSpec[0m
+[0m[[0m[31merror[0m] [0m[0mimport baseSpec.BaseSpecWithApplication[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:4:8: not found: object models[0m
+[0m[[0m[31merror[0m] [0m[0mimport models.DataModel[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:5:12: object mongodb is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.mongodb.scala.result[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:6:8: not found: object play[0m
+[0m[[0m[31merror[0m] [0m[0mimport play.api.test.FakeRequest[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:7:8: not found: object play[0m
+[0m[[0m[31merror[0m] [0m[0mimport play.api.http.Status[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:8:8: not found: object play[0m
+[0m[[0m[31merror[0m] [0m[0mimport play.api.libs.Comet.initialHtmlChunk.body[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:9:8: not found: object play[0m
+[0m[[0m[31merror[0m] [0m[0mimport play.api.libs.json.{JsValue, Json}[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:10:8: not found: object play[0m
+[0m[[0m[31merror[0m] [0m[0mimport play.api.mvc.{Action, Result}[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:11:8: not found: object play[0m
+[0m[[0m[31merror[0m] [0m[0mimport play.api.test.Helpers._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:17:41: not found: type BaseSpecWithApplication[0m
+[0m[[0m[31merror[0m] [0m[0mclass ApplicationControllerSpec extends BaseSpecWithApplication{[0m
+[0m[[0m[31merror[0m] [0m[0m                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:18:39: not found: type ApplicationController[0m
+[0m[[0m[31merror[0m] [0m[0m  val TestApplicationController = new ApplicationController([0m
+[0m[[0m[31merror[0m] [0m[0m                                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:19:4: not found: value component[0m
+[0m[[0m[31merror[0m] [0m[0m   component, repository, executionContext)[0m
+[0m[[0m[31merror[0m] [0m[0m   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:19:15: not found: value repository[0m
+[0m[[0m[31merror[0m] [0m[0m   component, repository, executionContext)[0m
+[0m[[0m[31merror[0m] [0m[0m              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:19:27: not found: value executionContext[0m
+[0m[[0m[31merror[0m] [0m[0m   component, repository, executionContext)[0m
+[0m[[0m[31merror[0m] [0m[0m                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:27:26: not found: type DataModel[0m
+[0m[[0m[31merror[0m] [0m[0m  private val dataModel: DataModel = DataModel ([0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:27:38: not found: value DataModel[0m
+[0m[[0m[31merror[0m] [0m[0m  private val dataModel: DataModel = DataModel ([0m
+[0m[[0m[31merror[0m] [0m[0m                                     ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:33:32: not found: type DataModel[0m
+[0m[[0m[31merror[0m] [0m[0m  private val updatedDataModel:DataModel = dataModel.copy(description="Dog Sitter")[0m
+[0m[[0m[31merror[0m] [0m[0m                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:35:34: value should is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m  "ApplicationController .index" should {[0m
+[0m[[0m[31merror[0m] [0m[0m                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:45:21: value in is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m    "return 200 OK" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:63:35: value should is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m  "ApplicationController .create" should {[0m
+[0m[[0m[31merror[0m] [0m[0m                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:64:35: value in is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m  "create a book in the database" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:66:18: not found: type FakeRequest[0m
+[0m[[0m[31merror[0m] [0m[0m    val request: FakeRequest[JsValue] = buildPost("/create").withBody[JsValue](Json.toJson(dataModel))[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:66:41: not found: value buildPost[0m
+[0m[[0m[31merror[0m] [0m[0m    val request: FakeRequest[JsValue] = buildPost("/create").withBody[JsValue](Json.toJson(dataModel))[0m
+[0m[[0m[31merror[0m] [0m[0m                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:66:71: not found: type JsValue[0m
+[0m[[0m[31merror[0m] [0m[0m    val request: FakeRequest[JsValue] = buildPost("/create").withBody[JsValue](Json.toJson(dataModel))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:66:80: not found: value Json[0m
+[0m[[0m[31merror[0m] [0m[0m    val request: FakeRequest[JsValue] = buildPost("/create").withBody[JsValue](Json.toJson(dataModel))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:67:31: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m    val createdResult: Future[Result] = TestApplicationController.create()(request)[0m
+[0m[[0m[31merror[0m] [0m[0m                              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:68:18: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m    val result = await(createdResult).header.status // Correctly awaiting the result[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:77:35: value should is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m  "ApplicationController .read()" should {[0m
+[0m[[0m[31merror[0m] [0m[0m                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:78:41: value in is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m    "find a book in the database by id" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:80:20: not found: type FakeRequest[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:80:43: not found: value buildGet[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:80:72: not found: type JsValue[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:80:81: not found: value Json[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:81:33: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val createdResult: Future[Result] = TestApplicationController.create()(request)[0m
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:82:7: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      await(createdResult).header.status shouldBe Status.CREATED[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:82:51: not found: value Status[0m
+[0m[[0m[31merror[0m] [0m[0m      await(createdResult).header.status shouldBe Status.CREATED[0m
+[0m[[0m[31merror[0m] [0m[0m                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:85:30: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())[0m
+[0m[[0m[31merror[0m] [0m[0m                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:87:7: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      await(readResult).header.status shouldBe Status.OK[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:87:48: not found: value Status[0m
+[0m[[0m[31merror[0m] [0m[0m      await(readResult).header.status shouldBe Status.OK[0m
+[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:88:7: not found: value contentAsJson[0m
+[0m[[0m[31merror[0m] [0m[0m      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:88:36: not found: type JsValue[0m
+[0m[[0m[31merror[0m] [0m[0m      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)[0m
+[0m[[0m[31merror[0m] [0m[0m                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:88:54: not found: value Json[0m
+[0m[[0m[31merror[0m] [0m[0m      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                     ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:91:31: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val readResult2: Future[Result] = TestApplicationController.read("aaaa")(FakeRequest())[0m
+[0m[[0m[31merror[0m] [0m[0m                              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:92:7: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      await(readResult2).header.status shouldBe Status.BAD_REQUEST[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:92:49: not found: value Status[0m
+[0m[[0m[31merror[0m] [0m[0m      await(readResult2).header.status shouldBe Status.BAD_REQUEST[0m
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:93:15: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      println(await(readResult2).header.status)[0m
+[0m[[0m[31merror[0m] [0m[0m              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:103:37: value should is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m  "ApplicationController .update()" should {[0m
+[0m[[0m[31merror[0m] [0m[0m                                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:104:51: value in is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m    "update the book in the database based on id" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:107:20: not found: type FakeRequest[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:107:43: not found: value buildGet[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:107:72: not found: type JsValue[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:107:81: not found: value Json[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:109:33: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val createdResult: Future[Result] = TestApplicationController.create()(request)[0m
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:110:7: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      await(createdResult).header.status shouldBe Status.CREATED[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:110:51: not found: value Status[0m
+[0m[[0m[31merror[0m] [0m[0m      await(createdResult).header.status shouldBe Status.CREATED[0m
+[0m[[0m[31merror[0m] [0m[0m                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:113:30: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())[0m
+[0m[[0m[31merror[0m] [0m[0m                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:114:7: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      await(readResult).header.status shouldBe Status.OK[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:114:48: not found: value Status[0m
+[0m[[0m[31merror[0m] [0m[0m      await(readResult).header.status shouldBe Status.OK[0m
+[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:115:7: not found: value contentAsJson[0m
+[0m[[0m[31merror[0m] [0m[0m      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:115:36: not found: type JsValue[0m
+[0m[[0m[31merror[0m] [0m[0m      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)[0m
+[0m[[0m[31merror[0m] [0m[0m                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:115:54: not found: value Json[0m
+[0m[[0m[31merror[0m] [0m[0m      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                     ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:118:26: not found: type FakeRequest[0m
+[0m[[0m[31merror[0m] [0m[0m      val updateRequest: FakeRequest[JsValue] = FakeRequest().withBody[JsValue](Json.toJson(updatedDataModel))[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:118:49: not found: value FakeRequest[0m
+[0m[[0m[31merror[0m] [0m[0m      val updateRequest: FakeRequest[JsValue] = FakeRequest().withBody[JsValue](Json.toJson(updatedDataModel))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:118:72: not found: type JsValue[0m
+[0m[[0m[31merror[0m] [0m[0m      val updateRequest: FakeRequest[JsValue] = FakeRequest().withBody[JsValue](Json.toJson(updatedDataModel))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:118:81: not found: value Json[0m
+[0m[[0m[31merror[0m] [0m[0m      val updateRequest: FakeRequest[JsValue] = FakeRequest().withBody[JsValue](Json.toJson(updatedDataModel))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:119:32: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val updateResult: Future[Result] = TestApplicationController.update(dataModel._id)(updateRequest)[0m
+[0m[[0m[31merror[0m] [0m[0m                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:121:26: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      val resultStatus = await(updateResult).header.status[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:124:26: not found: value contentAsJson[0m
+[0m[[0m[31merror[0m] [0m[0m      val jsonResponse = contentAsJson(updateResult).as[JsValue][0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:124:57: not found: type JsValue[0m
+[0m[[0m[31merror[0m] [0m[0m      val jsonResponse = contentAsJson(updateResult).as[JsValue][0m
+[0m[[0m[31merror[0m] [0m[0m                                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:131:37: value should is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m  "ApplicationController .delete()" should {[0m
+[0m[[0m[31merror[0m] [0m[0m                                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:132:51: value in is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m    "delete the book in the database based on id" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:135:20: not found: type FakeRequest[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:135:43: not found: value buildGet[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:135:72: not found: type JsValue[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:135:81: not found: value Json[0m
+[0m[[0m[31merror[0m] [0m[0m      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:137:33: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val createdResult: Future[Result] = TestApplicationController.create()(request)[0m
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:138:7: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      await(createdResult).header.status shouldBe Status.CREATED[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:138:51: not found: value Status[0m
+[0m[[0m[31merror[0m] [0m[0m      await(createdResult).header.status shouldBe Status.CREATED[0m
+[0m[[0m[31merror[0m] [0m[0m                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:141:30: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())[0m
+[0m[[0m[31merror[0m] [0m[0m                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:142:7: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      await(readResult).header.status shouldBe Status.OK[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:142:48: not found: value Status[0m
+[0m[[0m[31merror[0m] [0m[0m      await(readResult).header.status shouldBe Status.OK[0m
+[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:143:7: not found: value contentAsJson[0m
+[0m[[0m[31merror[0m] [0m[0m      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:143:36: not found: type JsValue[0m
+[0m[[0m[31merror[0m] [0m[0m      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)[0m
+[0m[[0m[31merror[0m] [0m[0m                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:143:54: not found: value Json[0m
+[0m[[0m[31merror[0m] [0m[0m      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                     ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:145:33: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val deleteRequest: Future[Result] = TestApplicationController.delete(dataModel._id)(FakeRequest())[0m
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:146:26: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      val deleteResult = await(deleteRequest).header.status[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:151:39: not found: type Result[0m
+[0m[[0m[31merror[0m] [0m[0m      val deleteRequestFailed: Future[Result] = TestApplicationController.delete("2122")(FakeRequest())[0m
+[0m[[0m[31merror[0m] [0m[0m                                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/ApplicationControllerSpec.scala:152:33: not found: value await[0m
+[0m[[0m[31merror[0m] [0m[0m      val deleteResultFailed2 = await(deleteRequestFailed).header.status[0m
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:3:8: not found: object baseSpec[0m
+[0m[[0m[31merror[0m] [0m[0mimport baseSpec.BaseSpec[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:4:12: object scalatest is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:5:12: object scalatestplus is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.scalatestplus.play.guice.GuiceOneAppPerSuite[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:6:8: not found: object play[0m
+[0m[[0m[31merror[0m] [0m[0mimport play.api.mvc.ControllerComponents[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:7:8: not found: object play[0m
+[0m[[0m[31merror[0m] [0m[0mimport play.api.test.Helpers._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:8:8: not found: object play[0m
+[0m[[0m[31merror[0m] [0m[0mimport play.api.test._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:17:34: not found: type BaseSpec[0m
+[0m[[0m[31merror[0m] [0m[0mclass HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuite {[0m
+[0m[[0m[31merror[0m] [0m[0m                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:17:48: not found: type Injecting[0m
+[0m[[0m[31merror[0m] [0m[0mclass HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuite {[0m
+[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:17:63: not found: type GuiceOneAppPerSuite[0m
+[0m[[0m[31merror[0m] [0m[0mclass HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuite {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:19:29: not found: type ControllerComponents[0m
+[0m[[0m[31merror[0m] [0m[0m  val controllerComponents: ControllerComponents = Helpers.stubControllerComponents()[0m
+[0m[[0m[31merror[0m] [0m[0m                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anthos.kountouris/Documents/Projects/play-template/test/controllers/HomeControllerSpec.scala:19:52: not found: value Helpers[0m
+[0m[[0m[31merror[0m] [0m[0m  val controllerComponents: ControllerComponents = Helpers.stubControllerComponents()[0m
+[0m[[0m[31merror[0m] [0m[0m                                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m100 errors found[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mcompileIncremental[0m) Compilation failed[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 2 s, completed 29 Apr 2024, 12:33:11[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m

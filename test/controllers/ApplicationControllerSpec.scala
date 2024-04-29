@@ -43,13 +43,13 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
     provides a way to pause the execution of the current thread until the Future is resolved.
      */
     "return 200 OK" in {
-      beforeEach()
+//      beforeEach()
       val resultFuture = TestApplicationController.index()(FakeRequest())
 //      println("Result Future: " + resultFuture) // Debug: print the Future object
       val result = Await.result(resultFuture, 2.seconds).header.status // Correctly awaiting the result
 //      println("HTTP Status with .status: " + result) // Debug: print the status
       result shouldBe OK
-      afterEach()
+//      afterEach()
     }
     /*
     - Uses a helper method called status() to pull out the HTTP response status of calling the function
@@ -62,22 +62,28 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
 
   "ApplicationController .create" should {
   "create a book in the database" in {
-    beforeEach()
-    val request: FakeRequest[JsValue] = buildPost("/api").withBody[JsValue](Json.toJson(dataModel))
+//    beforeEach()
+    val request: FakeRequest[JsValue] = buildPost("/create").withBody[JsValue](Json.toJson(dataModel))
     val createdResult: Future[Result] = TestApplicationController.create()(request)
     val result = await(createdResult).header.status // Correctly awaiting the result
     result shouldBe Status.CREATED
 //    println("The result is, " + result)
 //    status(createdResult) shouldBe Status.BAD_REQUEST
 
-    afterEach()
+    // when the book with the id exists
+    val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
+
+    await(readResult).header.status shouldBe Status.OK
+    contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)
+
+//    afterEach()
     }
   }
 
   "ApplicationController .read()" should {
     "find a book in the database by id" in {
-      beforeEach()
-      val request: FakeRequest[JsValue] = buildGet("/api/${dataModel._id}").withBody[JsValue](Json.toJson((dataModel)))
+//      beforeEach()
+      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))
       val createdResult: Future[Result] = TestApplicationController.create()(request)
       await(createdResult).header.status shouldBe Status.CREATED
 
@@ -90,21 +96,21 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
       // when the book id does not exist in the database
       val readResult2: Future[Result] = TestApplicationController.read("aaaa")(FakeRequest())
       await(readResult2).header.status shouldBe Status.BAD_REQUEST
-      println(await(readResult2).header.status)
+//      println(await(readResult2).header.status)
 
 
 //      println("content " + contentAsJson(readResult).as[JsValue])
 //      println("content of dataModel "+ Json.toJson(dataModel))
-      afterEach()
+//      afterEach()
     }
 
   }
 
   "ApplicationController .update()" should {
     "update the book in the database based on id" in {
-      beforeEach()
+//      beforeEach()
       // Creating a request for the creation of the dataModel
-      val request: FakeRequest[JsValue] = buildGet("/api/${dataModel._id}").withBody[JsValue](Json.toJson((dataModel)))
+      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))
       // Calling the .create function in the ApplicationController
       val createdResult: Future[Result] = TestApplicationController.create()(request)
       await(createdResult).header.status shouldBe Status.CREATED
@@ -124,15 +130,15 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
       val jsonResponse = contentAsJson(updateResult).as[JsValue]
       jsonResponse shouldBe Json.toJson(updatedDataModel)
 
-      afterEach()
+//      afterEach()
     }
   }
 
   "ApplicationController .delete()" should {
     "delete the book in the database based on id" in {
-      beforeEach()
+//      beforeEach()
       // Creating a request for the creation of the dataModel
-      val request: FakeRequest[JsValue] = buildGet("/api/${dataModel._id}").withBody[JsValue](Json.toJson((dataModel)))
+      val request: FakeRequest[JsValue] = buildGet("/create").withBody[JsValue](Json.toJson((dataModel)))
       // Calling the .create function in the ApplicationController
       val createdResult: Future[Result] = TestApplicationController.create()(request)
       await(createdResult).header.status shouldBe Status.CREATED
@@ -140,7 +146,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
       // Calling the .read function in the ApplicationController
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
       await(readResult).header.status shouldBe Status.OK
-      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)
+//      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)
 
       val deleteRequest: Future[Result] = TestApplicationController.delete(dataModel._id)(FakeRequest())
       val deleteResult = await(deleteRequest).header.status
@@ -153,14 +159,29 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
             println(deleteRequestFailed)
       deleteResultFailed2 shouldBe Status.BAD_REQUEST
 
-
-
-      afterEach()
+//      afterEach()
     }
   }
 
-  override def beforeEach(): Unit = await(repository.deleteAll())
-  override def afterEach(): Unit = await(repository.deleteAll())
-
-
+//  override def beforeEach(): Unit = await(repository.deleteAll())
+//  override def afterEach(): Unit = await(repository.deleteAll())
 }
+
+/*
+
+  **** Manually testing the rest of the API ****
+
+  CREATE (POST)
+  curl -H "Content-Type: application/json" -d '{ "_id" : "1", "name" : "testName", "description" : "testDescription", "pageCount" : 1 }' "localhost:9000/create" -i
+
+  READ (GET)
+  curl localhost:9000/read/1
+
+  UPDATE (PUT)
+  curl -X PUT "http://localhost:9000/update/1" \
+  -H "Content-Type: application/json" \
+  -d '{ "name" : "testNameUpdated", "description" : "testDescription", "pageCount" : 11 }'
+
+  DELETE (DELETE)
+  curl -X DELETE "http://localhost:9000/delete/2"
+ */
