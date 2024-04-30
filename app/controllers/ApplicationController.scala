@@ -3,7 +3,7 @@ package controllers
 ////import akka.actor.TypedActor.dispatcher
 //import scala.concurrent.ExecutionContext.Implicits.global
 import akka.pattern.FutureRef
-import models.DataModel
+import models.{APIError, DataModel}
 import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.OFormat.oFormatFromReadsAndOWrites
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
@@ -11,17 +11,18 @@ import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Request, Results}
 import repositories.DataRepository
+import services.LibraryService
 
 import scala.concurrent.{ExecutionContext, Future}
 
 // This class contains values necessary in most frontend controllers, such as multi-language support.
 @Singleton
-class ApplicationController @Inject() (val controllerComponents: ControllerComponents, val dataRepository: DataRepository, implicit val ec: ExecutionContext) extends BaseController{
+class ApplicationController @Inject() (val controllerComponents: ControllerComponents, val dataRepository: DataRepository, implicit val ec: ExecutionContext, val service: LibraryService) extends BaseController{
 
   def index(): Action[AnyContent] = Action.async { implicit request =>
     dataRepository.index().map{
       case Right(item: Seq[DataModel]) => Ok {Json.toJson(item)}
-      case Left(error) => Status(error)(Json.toJson("Unable to find any books"))
+      case Left(apiError: APIError) => InternalServerError(Json.obj("error" -> apiError.upstreamMessage))
     }
   }
   /*
@@ -67,8 +68,20 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
       case Right(item) => Accepted("Book deleted successfully.")
       case Left(_) => BadRequest
     }
-
   }
 
-}
+  def findByName(name:String): Action[AnyContent] = Action.async { implicit request =>
+    dataRepository.findByName(name).map{
+      case Right(item) => Ok {Json.toJson(item)}
+      case Left(_) => BadRequest{Json.toJson("Unable to find that book")}
+    }
+  }
 
+
+  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
+    service.getGoogleBook(search = search, term = term).value.map {
+      case Right(book) => Ok{Json.toJson(book)}
+      case Left(error) => BadRequest
+    }
+  }
+}

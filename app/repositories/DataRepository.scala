@@ -1,6 +1,6 @@
 package repositories
 
-import models.DataModel
+import models.{APIError, DataModel}
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.Filters.empty
 import org.mongodb.scala.model._
@@ -36,10 +36,10 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
   result of the query. This is akin to getting a cursor that can iterate over multiple results.
    */
 
-  def index(): Future[Either[Int, Seq[DataModel]]] =
+  def index(): Future[Either[APIError.BadAPIResponse, Seq[DataModel]]] =
     collection.find().toFuture().map {
       case books: Seq[DataModel] => Right(books)
-      case _ => Left(404)
+      case _ => Left(APIError.BadAPIResponse(404, "Books cannot be found"))
     }
 
   /*
@@ -57,7 +57,6 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
         .map(_ => Right(book))
     }
   }
-
 
   private def byID(id: String): Bson =
     Filters.and(
@@ -78,14 +77,12 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
 //      case None => Future(Left(Json.toJson(s"The book with the id: ${id} already exists.")))
 //    }
 
-//    def update(id: String, book: DataModel): Future[Either[json.JsValue, result.UpdateResult]] =
-//      collection.find(byID(book._id)) match {
-//        case bk: DataModel => collection.replaceOne(
-//          filter = byID(id),
-//          replacement = book,
-//          options = new ReplaceOptions().upsert(true) //What happens when we set this to false?
-//        ).toFuture().map(result => Right(result)).recover{case _ => Left(Json.toJson(s"The book with the id: ${id} already exists."))}
-//      }
+//  def update(id: String, book:DataModel): Future[Either[JsValue,result.UpdateResult]] =
+//    collection.replaceOne(
+//      filter = byID(id),
+//      replacement = book,
+//      options = new ReplaceOptions().upsert(true)
+//    ).toFuture().map(updateResult => Right(updateResult)).recover{case _ => Left(Json.toJson(s"Failed to update the document with id $id"))}
 
   def update(id: String, book:DataModel): Future[result.UpdateResult] =
     collection.replaceOne(
@@ -93,7 +90,6 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
       replacement = book,
       options = new ReplaceOptions().upsert(true)
     ).toFuture()
-
 
   /*
   DataModel if bk != null ensures that a valid DataModel object was returned.
@@ -120,5 +116,18 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
   delteAll() is similar to delete, this removes all data from Mongo with the same collection name
   All of the return types of these functions are asynchronous futures.
    */
+
+  // TASK 2 PART 5
+
+  private def byName(name: String): Bson =
+    Filters.and(
+      Filters.equal("name", name)
+    )
+
+  def findByName(name:String): Future[Either[JsValue, DataModel]] =
+    collection.find(byName(name)).headOption flatMap  {
+      case Some(data) => Future(Right(data))
+      case None => Future(Left(Json.toJson(s"The book with the name: ${name} does not exist.")))
+    }
 
 }
