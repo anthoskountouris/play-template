@@ -77,10 +77,26 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
     }
   }
 
+//  def updateByField(id: String, map: Map[String, String]): Action[AnyContent] = Action.async { implicit request =>
+//    dataRepository.updateByField(id, map).map {
+//      case Right(updateBook) => Ok {Json.toJson(updateBook)}
+//      case Left(err) => BadRequest{Json.toJson(s"The book was not found")}
+//    }
+//  }
+
+  def updateByField(id: String, fieldName:String, value:String): Action[AnyContent] = Action.async { implicit request =>
+    dataRepository.updateByField(id, fieldName, value).map { case Right(_) => Accepted("Book updated successfully.")
+    case Left(_) => BadRequest(Json.toJson("Something went wrong"))
+    }
+  }
+
+
 
   def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
     service.getGoogleBook(search = search, term = term).value.map {
-      case Right(book) => Ok{Json.toJson(book)}
+      case Right(book) => Ok {
+        Json.toJson(book)
+      }
       case Left(error) => BadRequest
     }
   }

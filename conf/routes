@@ -14,4 +14,7 @@ DELETE      /delete/:id      controllers.ApplicationController.delete(id:String)
 
 GET     /library/google/:search/:term      controllers.ApplicationController.getGoogleBook(search: String, term: String)
 
-GET     /read/:name      controllers.ApplicationController.findByName(name:String)
+GET     /readByName/:name      controllers.ApplicationController.findByName(name:String)
+
+#PUT     /updateByFieldName/:id/:map      controllers.ApplicationController.updateByField(id:String, map:Map[String, String])
+PUT     /updateByFieldName/:id/:fieldName/:value      controllers.ApplicationController.updateByField(id:String, fieldName:String, value:String)

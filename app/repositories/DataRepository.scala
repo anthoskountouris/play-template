@@ -1,12 +1,15 @@
 package repositories
 
 import models.{APIError, DataModel}
+import org.mongodb.scala.bson.BsonObjectId
 import org.mongodb.scala.bson.conversions.Bson
-import org.mongodb.scala.model.Filters.empty
+import org.mongodb.scala.model.Filters.{empty, equal}
+import org.mongodb.scala.model.Updates.set
 import org.mongodb.scala.model._
-import org.mongodb.scala.{FindObservable, result}
+import org.mongodb.scala.result.UpdateResult
+import org.mongodb.scala.{Document, FindObservable, result}
 import play.api.libs.json
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsError, JsValue, Json}
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
@@ -84,12 +87,13 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
 //      options = new ReplaceOptions().upsert(true)
 //    ).toFuture().map(updateResult => Right(updateResult)).recover{case _ => Left(Json.toJson(s"Failed to update the document with id $id"))}
 
-  def update(id: String, book:DataModel): Future[result.UpdateResult] =
+  def update(id: String, book:DataModel): Future[result.UpdateResult] = {
     collection.replaceOne(
       filter = byID(id),
       replacement = book,
       options = new ReplaceOptions().upsert(true)
     ).toFuture()
+  }
 
   /*
   DataModel if bk != null ensures that a valid DataModel object was returned.
@@ -98,7 +102,7 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
    */
 
   def delete(id: String): Future[Either[JsValue, result.DeleteResult]] =
-    collection.find(byID(id)).first().toFuture() flatMap  {
+    collection.find(byID(id)).first().toFuture() flatMap {
       case bk: DataModel if bk != null => collection.deleteOne(
         filter = byID(id)
       ).toFuture().map(deleteResult => Right(deleteResult))
@@ -124,10 +128,63 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
       Filters.equal("name", name)
     )
 
+  // Finding a book by name (first occurrence)
   def findByName(name:String): Future[Either[JsValue, DataModel]] =
     collection.find(byName(name)).headOption flatMap  {
       case Some(data) => Future(Right(data))
       case None => Future(Left(Json.toJson(s"The book with the name: ${name} does not exist.")))
     }
+
+  // Finding a book by name (all books with that name if there are many)
+//  def findByName(name:String): Future[Either[JsValue, Seq[DataModel]]] =
+//    collection.find(byName(name)).toFuture().map  {
+//      case books: Seq[DataModel] => Right(books)
+//      case _ => Left(Json.toJson(s"The book with the name: ${name} does not exist."))
+//    }
+
+//   Updating a book field by only providing the _id, field name and change, not a whole book
+//  def updateByField(id: String, fieldName: String, value:String): Future[Either[JsValue, result.UpdateResult]] = {
+//      collection.updateOne(equal("_id", id), set(fieldName, value)).headOption flatMap {
+//      case Some(x) => Future(Right(x))
+//      case None => Future(Left(Json.toJson(s"No book found with the id: ${id}.")))
+//    }
+//  }
+
+
+//  def updateByField(id: String, map: Map[String, String]): Future[Either[JsValue, result.UpdateResult]] = {
+//
+//    val updateDocument = Document("$set" -> Document(map))
+//    collection.updateOne(Filters.eq("_id", BsonObjectId(id)), updateDocument).headOption() flatMap {
+//      case Some(data) => Future(Right(data))
+//      case None => Future(Left(Json.toJson(s"There is no such book or you've given invalid field")))
+//    }
+////      .toFuture()
+//  }
+
+  def updateByField(id:String, fieldName: String, value:String): Future[Either[JsValue, result.UpdateResult]] = {
+    collection.find(byID(id)).headOption.flatMap {
+      case Some(book) =>
+        val updatedBook = fieldName match {
+          case "_id" => Left(Json.toJson("Cannot change '_id' of a book."))
+          case "name" => Right(book.copy(name = value))
+          case "description" => Right(book.copy(description = value))
+          case "pageCount" =>
+            try {
+              Right(book.copy(pageCount = value.toInt))
+            } catch {
+              case e: NumberFormatException => Left(Json.toJson("Invalid number format for pageCount."))
+            }
+          case _ => Left(Json.toJson(s"Field '$fieldName' is not recognized."))
+        }
+
+        updatedBook match {
+          case Right(bk) => update(id, bk).map(result => Right(result))
+          case Left(err) => Future(Left(err))
+        }
+
+      case None => Future(Left(Json.toJson(s"No book found with ID: $id")))
+
+    }
+  }
 
 }

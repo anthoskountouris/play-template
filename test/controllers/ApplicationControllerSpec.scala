@@ -30,6 +30,13 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
     "Fiction Story",
     100)
 
+  private val dataModel2: DataModel = DataModel (
+    "abbb",
+    "Game of Thrones",
+    "Fiction Story Part 2",
+    105
+  )
+
   private val updatedDataModel:DataModel = dataModel.copy(description="Dog Sitter")
 
   "ApplicationController .index" should {
@@ -189,6 +196,33 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
       await(findByNameRequestFailed).header.status shouldBe Status.BAD_REQUEST
     }
   }
+
+  "ApplicationController .updateByField()" should {
+    "update a specific filed of a book in the database based on id" in {
+//      beforeEach()
+      // Creating a request for the creation of the dataModel
+      val request: FakeRequest[JsValue] = buildPost("/create").withBody[JsValue](Json.toJson((dataModel)))
+      // Calling the .create function in the ApplicationController
+      val createdResult: Future[Result] = TestApplicationController.create()(request)
+      await(createdResult).header.status shouldBe Status.CREATED
+
+      // Calling the .read function in the ApplicationController
+      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
+      await(readResult).header.status shouldBe Status.OK
+
+      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)
+
+      val updateByFieldRequest: Future[Result] = TestApplicationController.updateByField("abcd", "pageCount", "300")(FakeRequest())
+      println(await(updateByFieldRequest).header.status)
+      await(updateByFieldRequest).header.status shouldBe Status.ACCEPTED
+
+      val updateByFieldRequestFailed: Future[Result] = TestApplicationController.updateByField("abcd", "pageCount", "apoel")(FakeRequest())
+      println(await(updateByFieldRequestFailed).header.status)
+      await(updateByFieldRequestFailed).header.status shouldBe Status.BAD_REQUEST
+//      afterEach()
+    }
+  }
+
 
 
 //  override def beforeEach(): Unit = await(repository.deleteAll())
