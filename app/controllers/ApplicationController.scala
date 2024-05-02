@@ -11,16 +11,16 @@ import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Request, Results}
 import repositories.DataRepository
-import services.LibraryService
+import services.{LibraryService, RepositoryService}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 // This class contains values necessary in most frontend controllers, such as multi-language support.
 @Singleton
-class ApplicationController @Inject() (val controllerComponents: ControllerComponents, val dataRepository: DataRepository, implicit val ec: ExecutionContext, val service: LibraryService) extends BaseController{
+class ApplicationController @Inject() (val controllerComponents: ControllerComponents, val dataRepository: DataRepository, implicit val ec: ExecutionContext, val service: LibraryService, val repService: RepositoryService) extends BaseController{
 
   def index(): Action[AnyContent] = Action.async { implicit request =>
-    dataRepository.index().map{
+    repService.index().map{
       case Right(item: Seq[DataModel]) => Ok {Json.toJson(item)}
       case Left(apiError: APIError) => InternalServerError(Json.obj("error" -> apiError.upstreamMessage))
     }
@@ -43,13 +43,13 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
   def create(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[DataModel] match {
       case JsSuccess(dataModel: DataModel, _) =>
-        dataRepository.create(dataModel).map(_ => Created)
+        repService.create(dataModel).map(_ => Created)
       case JsError(_) => Future(BadRequest) // The result of dataRepository.create() is a Future[Result], so even though we're not doing any lookup here, the type must be the same
     }
   }
 
   def read(id:String) = Action.async { implicit request =>
-    dataRepository.read(id).map{
+    repService.read(id).map{
       case Right(item) => Ok {Json.toJson(item)}
       case Left(_) => BadRequest{Json.toJson("Unable to find that book")}
     }
@@ -58,20 +58,20 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
   def update(id:String) = Action.async(parse.json) { implicit request =>
     request.body.validate[DataModel] match {
       case JsSuccess(dataModel: DataModel, _) =>
-        dataRepository.update(id, dataModel).map(_ => Accepted{Json.toJson(dataModel)})
+        repService.update(id, dataModel).map(_ => Accepted{Json.toJson(dataModel)})
       case JsError(_) => Future(BadRequest)
     }
   }
 
   def delete(id:String) = Action.async{ implicit request =>
-    dataRepository.delete(id).map {
+    repService.delete(id).map {
       case Right(item) => Accepted("Book deleted successfully.")
       case Left(_) => BadRequest
     }
   }
 
   def findByName(name:String): Action[AnyContent] = Action.async { implicit request =>
-    dataRepository.findByName(name).map{
+    repService.findByName(name).map{
       case Right(item) => Ok {Json.toJson(item)}
       case Left(_) => BadRequest{Json.toJson("Unable to find that book")}
     }
@@ -85,12 +85,10 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
 //  }
 
   def updateByField(id: String, fieldName:String, value:String): Action[AnyContent] = Action.async { implicit request =>
-    dataRepository.updateByField(id, fieldName, value).map { case Right(_) => Accepted("Book updated successfully.")
+    repService.updateByField(id, fieldName, value).map { case Right(_) => Accepted("Book updated successfully.")
     case Left(_) => BadRequest(Json.toJson("Something went wrong"))
     }
   }
-
-
 
   def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
     service.getGoogleBook(search = search, term = term).value.map {

@@ -16,7 +16,7 @@ import play.api.test.CSRFTokenHelper.CSRFFRequestHeader
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, POST}
 import repositories.DataRepository
-import services.LibraryService
+import services.{LibraryService, RepositoryService}
 
 import scala.concurrent.ExecutionContext
 
@@ -37,6 +37,8 @@ trait BaseSpecWithApplication extends BaseSpec with GuiceOneServerPerSuite with 
 
   implicit val messagesApi = app.injector.instanceOf[MessagesApi]
   lazy val injector: Injector = app.injector
+
+  lazy val repService: RepositoryService = injector.instanceOf[RepositoryService]
 
   // fakeRequest and fakeApplication use Guice to help construct an instance of the application being called
   override def fakeApplication(): Application =

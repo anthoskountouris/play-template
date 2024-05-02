@@ -1,5 +1,6 @@
 package repositories
 
+import com.google.inject.ImplementedBy
 import models.{APIError, DataModel}
 import org.mongodb.scala.bson.BsonObjectId
 import org.mongodb.scala.bson.conversions.Bson
@@ -15,6 +16,17 @@ import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
+@ImplementedBy(classOf[DataRepository])
+trait MockRepository {
+  def index(): Future[Either[APIError.BadAPIResponse, Seq[DataModel]]]
+  def create(book: DataModel): Future[Either[JsValue, DataModel]]
+  def read(id: String): Future[Either[JsValue,DataModel]]
+  def update(id: String, book:DataModel): Future[result.UpdateResult]
+  def delete(id: String): Future[Either[JsValue, result.DeleteResult]]
+  def findByName(name:String): Future[Either[JsValue, DataModel]]
+  def updateByField(id:String, fieldName: String, value:String): Future[Either[JsValue, result.UpdateResult]]
+}
 
 @Singleton
 class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: ExecutionContext) extends PlayMongoRepository[DataModel](
@@ -32,7 +44,7 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
     (the format that data is stored in Mongo)
   - indexes is shows the structure of the data stored in Mongo, notice we can ensure the bookId to be unique
    */
-) {
+) with MockRepository{
 
   /*
   .find() returns a FindObservable, which is capable of returning multiple documents as the
@@ -150,7 +162,6 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
 //    }
 //  }
 
-
 //  def updateByField(id: String, map: Map[String, String]): Future[Either[JsValue, result.UpdateResult]] = {
 //
 //    val updateDocument = Document("$set" -> Document(map))
@@ -181,10 +192,7 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
           case Right(bk) => update(id, bk).map(result => Right(result))
           case Left(err) => Future(Left(err))
         }
-
       case None => Future(Left(Json.toJson(s"No book found with ID: $id")))
-
     }
   }
-
 }

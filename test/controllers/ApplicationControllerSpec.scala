@@ -16,7 +16,7 @@ import scala.concurrent.duration._
 
 class ApplicationControllerSpec extends BaseSpecWithApplication{
   val TestApplicationController = new ApplicationController(
-   component, repository, executionContext, service)
+   component, repository, executionContext, service, repService)
   /*
   - This creates a test version of your controller that you can reuse for testing and
   call your new Action methods on.

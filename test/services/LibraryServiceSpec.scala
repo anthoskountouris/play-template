@@ -4,16 +4,13 @@ import baseSpec.BaseSpec
 import cats.data.EitherT
 import connectors.LibraryConnector
 import models.{APIError, Book}
-import org.apache.commons.lang3.exception.ExceptionContext
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.libs.json.Format.GenericFormat
-import play.api.libs.json.{JsError, JsValue, Json, OFormat}
-import play.shaded.ahc.org.asynchttpclient.Response
+import play.api.libs.json.{JsValue, Json, OFormat}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures with GuiceOneAppPerSuite{
   val mockConnector: LibraryConnector = mock[LibraryConnector]
