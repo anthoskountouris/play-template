@@ -1,7 +1,7 @@
 package repositories
 
 import com.google.inject.ImplementedBy
-import models.{APIError, DataModel}
+import models.{APIError, DataModel, VolumeInfo}
 import org.mongodb.scala.bson.BsonObjectId
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.Filters.{empty, equal}
@@ -34,7 +34,7 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
   mongoComponent = mongoComponent,
   domainFormat = DataModel.formats,
   indexes = Seq(IndexModel(
-    Indexes.ascending("_id")
+    Indexes.ascending("id")
   )),
   replaceIndexes = false
   /*
@@ -64,8 +64,8 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
    */
 
   def create(book: DataModel): Future[Either[JsValue, DataModel]] = {
-    collection.find(byID(book._id)).first().toFuture() flatMap  {
-      case bk: DataModel => Future(Left(Json.toJson(s"The book with the id: ${bk._id} already exists.")))
+    collection.find(byID(book.id)).first().toFuture() flatMap  {
+      case bk: DataModel => Future(Left(Json.toJson(s"The book with the id: ${bk.id} already exists.")))
       case _ => collection
         .insertOne(book)
         .toFuture()
@@ -75,7 +75,7 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
 
   private def byID(id: String): Bson =
     Filters.and(
-      Filters.equal("_id", id)
+      Filters.equal("id", id)
     )
 
   def read(id: String): Future[Either[JsValue,DataModel]] =
@@ -137,7 +137,7 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
 
   private def byName(name: String): Bson =
     Filters.and(
-      Filters.equal("name", name)
+      Filters.equal("volumeInfo.title", name)
     )
 
   // Finding a book by name (first occurrence)
@@ -177,11 +177,11 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
       case Some(book) =>
         val updatedBook = fieldName match {
           case "_id" => Left(Json.toJson("Cannot change '_id' of a book."))
-          case "name" => Right(book.copy(name = value))
-          case "description" => Right(book.copy(description = value))
+          case "title" => Right(book.copy(volumeInfo = VolumeInfo(value, book.volumeInfo.description, book.volumeInfo.pageCount)))
+          case "description" => Right(book.copy(volumeInfo = VolumeInfo(book.volumeInfo.title, Some(value), book.volumeInfo.pageCount)))
           case "pageCount" =>
             try {
-              Right(book.copy(pageCount = value.toInt))
+              Right(book.copy(volumeInfo = VolumeInfo(book.volumeInfo.title, book.volumeInfo.description, Some(value.toInt))))
             } catch {
               case e: NumberFormatException => Left(Json.toJson("Invalid number format for pageCount."))
             }

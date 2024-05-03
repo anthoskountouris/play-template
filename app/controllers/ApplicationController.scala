@@ -90,12 +90,34 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
     }
   }
 
+//  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
+//    service.getGoogleBook(search = search, term = term).value.map {
+//      case Right(book) =>
+//        Ok (Json.toJson(book.items.head))
+//      case Left(_) => BadRequest(Json.toJson("Something went wrong"))
+//    }
+//  }
+
   def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
-    service.getGoogleBook(search = search, term = term).value.map {
-      case Right(book) => Ok {
-        Json.toJson(book)
-      }
-      case Left(error) => BadRequest
+    service.getGoogleBook(search = search, term = term).value.flatMap {
+      case Right(book) =>
+        Json.toJson(book.items.head).validate[DataModel] match {
+          case JsSuccess(dataModel, _) =>
+            repService.create(dataModel).map(_ => Created)
+          case JsError(errors) =>
+            Future(BadRequest(Json.toJson("Invalid data model")))
+        }
+      case Left(error) =>
+        Future(BadRequest(Json.toJson("Something went wrong")))
     }
   }
+
+
+//  request.body.validate[DataModel] match {
+//    case JsSuccess(dataModel: DataModel, _) =>
+//      repService.create(dataModel).map(_ => Created)
+//    case JsError(_) => Future(BadRequest) // The result of dataRepository.create() is a Future[Result], so even though we're not doing any lookup here, the type must be the same
+//  }
+
+
 }

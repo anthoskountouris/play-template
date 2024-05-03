@@ -28,6 +28,8 @@ class RepositoryService  @Inject()(mockRepository: MockRepository)(implicit ex: 
   def updateByField(id:String, fieldName: String, value:String): Future[Either[JsValue, result.UpdateResult]] =
     mockRepository.updateByField(id, fieldName, value)
 
+//  def
+
 }
 
 

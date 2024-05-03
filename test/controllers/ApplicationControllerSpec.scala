@@ -1,7 +1,7 @@
 package controllers
 import akka.util.ByteString
 import baseSpec.BaseSpecWithApplication
-import models.DataModel
+import models.{DataModel, VolumeInfo}
 import org.mongodb.scala.result
 import play.api.test.FakeRequest
 import play.api.http.Status
@@ -25,19 +25,14 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
    */
 
   private val dataModel: DataModel = DataModel (
-    "abcd",
-    "Game of Thrones",
-    "Fiction Story",
-    100)
+    id = "abcd",
+    volumeInfo = VolumeInfo("Game of Thrones", Some("Fiction Story"), Some(100)))
 
   private val dataModel2: DataModel = DataModel (
-    "abbb",
-    "Game of Thrones",
-    "Fiction Story Part 2",
-    105
-  )
+    id = "abbb",
+    volumeInfo = VolumeInfo("Game of Thrones 2", Some("Fiction Story 2"), Some(200)))
 
-  private val updatedDataModel:DataModel = dataModel.copy(description="Dog Sitter")
+  private val updatedDataModel:DataModel = dataModel.copy(volumeInfo= VolumeInfo(dataModel.volumeInfo.title, Some("Dog Sitter"), dataModel.volumeInfo.pageCount)  )
 
   "ApplicationController .index" should {
     /*
@@ -73,13 +68,17 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
     val request: FakeRequest[JsValue] = buildPost("/create").withBody[JsValue](Json.toJson(dataModel))
     val createdResult: Future[Result] = TestApplicationController.create()(request)
     val result = await(createdResult).header.status // Correctly awaiting the result
+//    println(result)
     result shouldBe Status.CREATED
 //    println("The result is, " + result)
 //    status(createdResult) shouldBe Status.BAD_REQUEST
 
     // when the book with the id exists
     val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
+//    println(await(readResult).header.status)
+//    println(Json.toJson(dataModel))
 
+//    println(contentAsJson(readResult))
     await(readResult).header.status shouldBe Status.OK
     contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)
 
@@ -129,7 +128,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
 
       // Creating a request for the updated dataModel
       val updateRequest: FakeRequest[JsValue] = FakeRequest().withBody[JsValue](Json.toJson(updatedDataModel))
-      val updateResult: Future[Result] = TestApplicationController.update(dataModel._id)(updateRequest)
+      val updateResult: Future[Result] = TestApplicationController.update(dataModel.id)(updateRequest)
 
       val resultStatus = await(updateResult).header.status
       resultStatus shouldBe Status.ACCEPTED
@@ -155,7 +154,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
       await(readResult).header.status shouldBe Status.OK
 //      contentAsJson(readResult).as[JsValue] shouldBe Json.toJson(dataModel)
 
-      val deleteRequest: Future[Result] = TestApplicationController.delete(dataModel._id)(FakeRequest())
+      val deleteRequest: Future[Result] = TestApplicationController.delete(dataModel.id)(FakeRequest())
       val deleteResult = await(deleteRequest).header.status
 //      println(deleteResult)
 //      println(dataModel.toString)
@@ -224,7 +223,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
   }
 
 
-
+//
 //  override def beforeEach(): Unit = await(repository.deleteAll())
 //  override def afterEach(): Unit = await(repository.deleteAll())
 }
@@ -246,4 +245,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
 
   DELETE (DELETE)
   curl -X DELETE "http://localhost:9000/delete/2"
+
+  CALLING THE GOOGLE API -> GET AND THEN CREATE
+  curl localhost:9000/library/google/isbn/1544512260
  */

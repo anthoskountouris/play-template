@@ -22,25 +22,32 @@ class RepositoryServiceSpec extends BaseSpec with MockFactory with ScalaFutures 
   val testService = new RepositoryService(mockRepository)
 
   val book1: JsValue = Json.obj(
-    "_id" -> "1",
-    "name" -> "Book One",
-    "description" -> "Description One",
-    "pageCount" -> 100
+    "id" -> "1",
+    "volumeInfo" -> Json.obj(
+      "title" -> "Book one",
+      "description" -> "Description one",
+      "pageCount" -> 200
+    )
   )
 
   val book2: JsValue = Json.obj(
-    "_id" -> "2",
-    "name" -> "Book two",
-    "description" -> "Description Two",
-    "pageCount" -> 200
+    "id" -> "2",
+    "volumeInfo" -> Json.obj(
+      "title" -> "Book two",
+      "description" -> "Description Two",
+      "pageCount" -> 200
+    )
   )
 
   val book3: JsValue = Json.obj(
-    "_id" -> "3",
-    "name" -> "Book Three",
-    "description" -> "Description Three",
-    "pageCount" -> 300
+    "id" -> "3",
+    "volumeInfo" -> Json.obj(
+      "title" -> "Book three",
+      "description" -> "Description Three",
+      "pageCount" -> 300
+    )
   )
+
 
   val dataModels: Seq[JsValue] = Seq(book1, book2, book3)
 
