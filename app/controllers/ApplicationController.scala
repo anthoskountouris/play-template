@@ -9,15 +9,15 @@ import play.api.libs.json.OFormat.oFormatFromReadsAndOWrites
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 
 import javax.inject.{Inject, Singleton}
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Request, Results}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Request, Results, Result}
 import repositories.DataRepository
 import services.{LibraryService, RepositoryService}
-
+import play.filters.csrf.CSRF
 import scala.concurrent.{ExecutionContext, Future}
 
 // This class contains values necessary in most frontend controllers, such as multi-language support.
 @Singleton
-class ApplicationController @Inject() (val controllerComponents: ControllerComponents, val dataRepository: DataRepository, implicit val ec: ExecutionContext, val service: LibraryService, val repService: RepositoryService) extends BaseController{
+class ApplicationController @Inject() (val controllerComponents: ControllerComponents, val dataRepository: DataRepository, implicit val ec: ExecutionContext, val service: LibraryService, val repService: RepositoryService) extends BaseController with play.api.i18n.I18nSupport{
 
   def index(): Action[AnyContent] = Action.async { implicit request =>
     repService.index().map{
@@ -118,6 +118,46 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
 //      repService.create(dataModel).map(_ => Created)
 //    case JsError(_) => Future(BadRequest) // The result of dataRepository.create() is a Future[Result], so even though we're not doing any lookup here, the type must be the same
 //  }
+
+  def example(): Action[AnyContent] = Action.async {implicit request: Request[AnyContent] =>
+    repService.read("OSchEAAAQBAJ").map {
+      case Right(result) =>
+      Ok(views.html.example(dataModel = result))
+    }
+  }
+
+  // for the GET request that will load the form views page
+  def addBook(): Action[AnyContent] = Action.async {implicit request: Request[AnyContent] =>
+    Future.successful(Ok(views.html.form(bookForm = DataModel.bookForm)))
+  }
+
+  /* Cross Site Request Forgery (CSRF) is a security exploit where an attacker
+  tricks a victim’s browser into making a request using the victim’s session.
+  */
+
+  def accessToken(implicit request: Request[_]) = {
+    CSRF.getToken
+  }
+
+  // for the POST request that will create the new book
+  def addBookForm(): Action[AnyContent] =  Action.async {implicit request =>
+    accessToken //call the accessToken method
+    DataModel.bookForm
+      .bindFromRequest()
+      .fold( //from the implicit request we want to bind this to the form in our companion object
+      formWithErrors => {
+        //here write what you want to do if the form has errors
+        Future.successful(BadRequest(views.html.form(formWithErrors)))
+      },
+      formData => {
+        //here write how you would use this data to create a new book (DataModel)
+        repService.create(formData).map { _ =>
+          Redirect(routes.ApplicationController.read(formData.id))
+        } recover
+          { case _ => InternalServerError("Could not create the book")}
+      }
+    )
+  }
 
 
 }

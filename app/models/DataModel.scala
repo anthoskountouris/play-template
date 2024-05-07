@@ -1,6 +1,9 @@
 package models
 
 import play.api.libs.json.{Json, OFormat}
+import play.api.data._
+import play.api.data.Forms._
+
 
 case class VolumeInfo(title:String, description:Option[String], pageCount:Option[Int])
 
@@ -16,6 +19,16 @@ object DataModel {
   implicit val formats: OFormat[DataModel] = Json.format[DataModel]
 //  val bookOne = DataModel(_id = "id1", name = "Book name", description = "Author name", pageCount = 10)
 //  val booktwo = DataModel(_id = "id1", name = "Book name", description = "Author name", pageCount = 10)
+  val bookForm: Form[DataModel] = Form(
+    mapping(
+      "id" -> text,
+      "volumeInfo" -> mapping (
+        "title" -> text, //
+        "description" -> optional(text),
+        "pageCount" -> optional(number)
+      )(VolumeInfo.apply)(VolumeInfo.unapply)
+    )(DataModel.apply)(DataModel.unapply)
+  )
 }
 
 case class ApiResponse(items: List[DataModel])

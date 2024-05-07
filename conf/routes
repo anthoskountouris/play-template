@@ -18,3 +18,11 @@ GET     /readByName/:name      controllers.ApplicationController.findByName(name
 
 #PUT     /updateByFieldName/:id/:map      controllers.ApplicationController.updateByField(id:String, map:Map[String, String])
 PUT     /updateByFieldName/:id/:fieldName/:value      controllers.ApplicationController.updateByField(id:String, fieldName:String, value:String)
+
+# Calling the example.html
+GET     /example        controllers.ApplicationController.example()
+
+
+GET     /addbook/form     controllers.ApplicationController.addBook()
+POST     /addbook/form     controllers.ApplicationController.addBookForm()
+

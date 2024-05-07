@@ -1,0 +1,9 @@
+.book {
+    height: auto;
+    width: auto;
+    border-style: solid;
+    border-color: black;
+    margin: 30px;
+    padding: 30px;
+    border-radius: 1%;
+}

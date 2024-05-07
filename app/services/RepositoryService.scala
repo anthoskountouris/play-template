@@ -5,7 +5,7 @@ import connectors.LibraryConnector
 import models.{APIError, Book, DataModel}
 import org.mongodb.scala.result
 import play.api.libs.json.JsValue
-import repositories.{DataRepository, MockRepository}
+import repositories.MockRepository
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
