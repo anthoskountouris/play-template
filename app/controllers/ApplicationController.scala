@@ -158,6 +158,4 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
       }
     )
   }
-
-
 }

@@ -1,20 +1,33 @@
 package controllers
 import akka.util.ByteString
 import baseSpec.BaseSpecWithApplication
+import com.google.common.base.Predicates.equalTo
+import models.DataModel.bookForm
 import models.{DataModel, VolumeInfo}
 import org.mongodb.scala.result
+import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.data.Form
+import play.api.data.FormBinding.Implicits.formBinding
+import play.api.data.Forms.mapping
 import play.api.test.FakeRequest
 import play.api.http.Status
+import play.api.i18n.{DefaultMessagesApi, Messages}
 import play.api.libs.Comet.initialHtmlChunk.body
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Action, Result}
+import play.api.mvc.Results.{BadRequest, Redirect}
+import play.api.mvc.{Action, AnyContentAsFormUrlEncoded, Request, Result}
+import play.api.test.CSRFTokenHelper.CSRFRequest
 import play.api.test.Helpers._
+import play.api.test._
+import views.html.helper.form
 
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 
 
-class ApplicationControllerSpec extends BaseSpecWithApplication{
+
+class ApplicationControllerSpec extends BaseSpecWithApplication with Injecting {
   val TestApplicationController = new ApplicationController(
    component, repository, executionContext, service, repService)
   /*
@@ -226,6 +239,106 @@ class ApplicationControllerSpec extends BaseSpecWithApplication{
 //
 //  override def beforeEach(): Unit = await(repository.deleteAll())
 //  override def afterEach(): Unit = await(repository.deleteAll())
+
+  "ApplicationController GET .addBook" should {
+    /*
+    Because it manually creates the controller, this test is highly isolated.
+    It does not depend on the Play application's injector or any other part of
+    the application setup. This method ensures that no external application
+    configurations or modules affect the test, making it very controlled.
+    his approach is useful when you want to test the controller in complete
+    isolation from the rest of your application components. It allows you to
+    specifically test the functionality of the controller without any interference
+    or dependencies that might be configured in the application.
+     */
+    "render the form page from a new instance" in {
+      val formPage = TestApplicationController.addBook().apply(FakeRequest(GET, "/addbook/form").withCSRFToken)
+      status(formPage) mustBe OK
+      contentType(formPage) mustBe Some("text/html")
+      contentAsString(formPage) must include ("Add Book")
+    }
+    /* his method ensures that the controller is provided with all its
+    required dependencies as configured in the running Play application.
+    Since this test uses the application's injector, it is more of an
+    integration test than a unit test.
+     */
+    "render the from page from the application" in {
+      val controller = inject[ApplicationController]
+      val formPage = controller.addBook().apply(FakeRequest(GET, "/addbook/form").withCSRFToken)
+      status(formPage) mustBe OK
+      contentType(formPage) mustBe Some("text/html")
+      contentAsString(formPage) must include ("Add Book")
+
+    }
+
+    "render the form page from the router" in {
+      val request = FakeRequest(GET, "/addbook/form").withCSRFToken
+      val formPage = route(app, request).get
+      status(formPage) mustBe OK
+      contentType(formPage) mustBe Some("text/html")
+      contentAsString(formPage) must include ("Add Book")
+    }
+  }
+
+  "ApplicationController .addBookForm" should {
+    "redirect on valid form submission" in {
+      implicit val request: Request[AnyContentAsFormUrlEncoded] =
+        FakeRequest(POST, "/addbook/form")
+          .withFormUrlEncodedBody(
+            "id" -> "1223",
+            "volumeInfo.title" -> "Test",
+            "volumeInfo.description" -> "Test Test",
+            "volumeInfo.pageCount" -> "23")
+          .withCSRFToken
+
+      val result = TestApplicationController.addBookForm().apply(request)
+      status(result) mustBe SEE_OTHER
+      redirectLocation(result) mustBe Some(routes.ApplicationController.read("1223").url)
+
+//
+//      def errorFunc(badForm: Form[DataModel]) = {
+//        BadRequest(views.html.form(badForm))
+//      }
+//
+//      def successFunc(formData: DataModel) = {
+//        Redirect(routes.ApplicationController.read(formData.id))
+//        //        ACCEPTED(Json.toJson(formData))
+//      }
+//
+//      val result = Future.successful(DataModel.bookForm.bindFromRequest().fold(errorFunc, successFunc))
+//      await(result).header.status mustBe SEE_OTHER
+//      println(await(result))
+    }
+      "redirect BadRequest on invalid form submission (Case 1 -> id is empty)" in {
+      implicit val request: Request[AnyContentAsFormUrlEncoded] =
+        FakeRequest(POST, "/addbook/form")
+          .withFormUrlEncodedBody(
+            "id" -> "",
+            "volumeInfo.title" -> "Test",
+            "volumeInfo.description" -> "Test Test",
+            "volumeInfo.pageCount" -> "23")
+          .withCSRFToken
+
+      val result = TestApplicationController.addBookForm().apply(request)
+      status(result) mustBe BAD_REQUEST
+      println(result)
+    }
+
+    "redirect BadRequest on invalid form submission (Case 2 -> pageCount not number)" in {
+      implicit val request: Request[AnyContentAsFormUrlEncoded] =
+        FakeRequest(POST, "/addbook/form")
+          .withFormUrlEncodedBody(
+            "id" -> "2121",
+            "volumeInfo.title" -> "Test",
+            "volumeInfo.description" -> "Test Test",
+            "volumeInfo.pageCount" -> "ABCD")
+          .withCSRFToken
+
+      val result = TestApplicationController.addBookForm().apply(request)
+      status(result) mustBe BAD_REQUEST
+      println(result)
+    }
+  }
 }
 
 /*
