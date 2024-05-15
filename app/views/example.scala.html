@@ -1,10 +1,17 @@
 @(dataModel: DataModel)
-@main("Find Book"){
-    <h1>Google Book Api Project</h1>
-    <div class="book">
-        <h3>@dataModel.volumeInfo.title</h3>
-        <p><b>Id: </b>@dataModel.id</p>
-        <p><b>Description: </b> @dataModel.volumeInfo.description</p>
-        <p><b>Page Count: </b> @dataModel.volumeInfo.pageCount</p>
+@main("Find Book") {
+    <div class="govuk-width-container">
+        <main class="govuk-main-wrapper">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <h1 class="govuk-heading-xl govuk-!-text-align-centre">Google Book Api Book Example</h1>
+
+                    <h3 class="govuk-heading-m">@dataModel.volumeInfo.title</h3>
+                    <p><b>Id: </b>@dataModel.id</p>
+                    <p><b>Description: </b> @dataModel.volumeInfo.description</p>
+                    <p><b>Page Count: </b> @dataModel.volumeInfo.pageCount</p>
+                </div>
+            </div>
+        </main>
     </div>
 }

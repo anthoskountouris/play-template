@@ -1,3 +1,21 @@
+/*.container-of-content {*/
+/*    text-align: center;*/
+/*}*/
+
+body{ background-color: #ececec;}
+
+.title-container {
+    text-align: center;
+    padding: 40px;
+    margin: 50px;
+    color: #385170 ;
+}
+
+/*.text-center {*/
+/*    text-align: center;*/
+/*}*/
+
+
 .book {
     height: auto;
     width: auto;
@@ -16,7 +34,7 @@
     margin: 0;
 }
 
-.container {
+.container-2 {
     display: flex;
     flex-direction: column;
     align-items: center;

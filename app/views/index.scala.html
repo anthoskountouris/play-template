@@ -2,88 +2,188 @@
 
 @main("Play Scala API demo") {
 
-<div class="container h-100 d-flex justify-content-center">
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+@*    <div class="govuk-width-container">*@
+@*      <main class="govuk-main-wrapper" id="main-content">*@
+        <h1 class="govuk-heading-xl govuk-!-text-align-centre">Play Scala Project</h1>
+@*      </main>*@
+@*    </div>*@
 
-  <div class="jumbotron my-auto">
+@*    <div class="title-container">*@
+@*      <h1 class="govuk-heading-xl"></h1>*@
+@*    </div>*@
 
-    <div class="container mb-5">
-      <h1 class="display-3 row">This is Anthos's first Play Scala project</h1>
-    </div>
-
-    <p class="lead">
+    <p class="govuk-body govuk-!-font-size-18">
       A demo project based off the <a href="https://github.com/miranda-hawkes/induction-tutorials/blob/master/Building-A-RESTful-API-With-Scala-Play/README.md"> Building a RESTful API with Scala and Play </a> tutorial.
     </p>
 
-    <p class="lead mb-5">This project is deployed via Heroku.</p>
-
-    <h3>API Documentation</h3>
-    <div class="justify-content-center">
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">URL</th>
-          <th scope="col">HTTP Method</th>
-          <th scope="col">Required Header</th>
-          <th scope="col">Body</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <th scope="row">/</th>
-          <td><code>GET</code></td>
-          <td>None</td>
-          <td>N/A</td>
-        </tr>
-          <tr>
-            <th scope="row">/api</th>
-            <td><code>GET</code></td>
-            <td>None</td>
-            <td>N/A</td>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">API Documentation</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">URL</th>
+            <th scope="col" class="govuk-table__header">HTTP Method</th>
+            <th scope="col" class="govuk-table__header">Required Header</th>
+            <th scope="col" class="govuk-table__header">Body</th>
           </tr>
-        <tr>
-          <th scope="row">/create</th>
-          <td><code>POST</code></td>
-          <td>Content-Type: application/json</td>
-          <td><code>
-            "_id" : String
-            <br>
-            "name" : String
-            <br>
-            "description" : String
-            <br>
-            "pageCount" : Int
-          </code></td>
-        </tr>
-        <tr>
-          <th scope="row">/read/:id</th>
-          <td><code>GET</code></td>
-          <td>None</td>
-          <td>N/A</td>
-        </tr>
-        <tr>
-          <th scope="row">/update/:id</th>
-          <td><code>PUT</code></td>
-          <td>Content-Type: application/json</td>
-          <td><code>
-            "_id" : String
-            <br>
-            "name" : String
-            <br>
-            "description" : String
-            <br>
-            "pageCount" : Int
-          </code></td>
-        </tr>
-        <tr>
-          <th scope="row">/delete/:id</th>
-          <td><code>DELETE</code></td>
-          <td>Content-Type: application/json</td>
-          <td>N/A</td>
-        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/</th>
+            <td class="govuk-table__cell">GET</td>
+            <td class="govuk-table__cell">Content-Type: text/html</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/api</th>
+            <td class="govuk-table__cell">GET</td>
+            <td class="govuk-table__cell">Content-Type: application/json</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/create</th>
+            <td class="govuk-table__cell">POST</td>
+            <td class="govuk-table__cell">Content-Type: application/json</td>
+            <td class="govuk-table__cell">{ "_id" : String, <br>
+              volumeInfo: { <br> "title" : String, <br>
+              "description" : String, <br>
+              "pageCount" : Int
+              }}
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/read/:id</th>
+            <td class="govuk-table__cell">GET</td>
+            <td class="govuk-table__cell">Content-Type: application/json</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/update/:id</th>
+            <td class="govuk-table__cell">PUT</td>
+            <td class="govuk-table__cell">Content-Type: application/json</td>
+            <td class="govuk-table__cell"> { "_id" : String, <br>
+              volumeInfo: { <br> "title" : String, <br>
+                            "description" : String, <br>
+                            "pageCount" : Int
+              }}
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/delete/:id</th>
+            <td class="govuk-table__cell">DELETE</td>
+            <td class="govuk-table__cell">Content-Type: application/json</td>
+            <td class="govuk-table__cell"> N/A </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/library/google/:search/:term</th>
+            <td class="govuk-table__cell">GET</td>
+            <td class="govuk-table__cell">Content-Type: application/json</td>
+            <td class="govuk-table__cell">N/A</tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/readByName/:name</th>
+            <td class="govuk-table__cell">GET</td>
+            <td class="govuk-table__cell">Content-Type: application/json</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/updateByFieldName/:id/:fieldName/:value</th>
+            <td class="govuk-table__cell">PUT</td>
+            <td class="govuk-table__cell">Content-Type: application/json</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/example</th>
+            <td class="govuk-table__cell">GET</td>
+            <td class="govuk-table__cell">Content-Type: text/html</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/addbook/form</th>
+            <td class="govuk-table__cell">GET</td>
+            <td class="govuk-table__cell">Content-Type: text/html</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">/addbook/form</th>
+            <td class="govuk-table__cell">POST</td>
+            <td class="govuk-table__cell">application/x-www-form-urlencoded</td>
+            <td class="govuk-table__cell">id=string<br>&title=string<br>&author=string<br>&publishedDate=string<br>&description=string
+            </td>
+          </tr>
         </tbody>
       </table>
-    </div>
-  </div>
 
-</div>
+@*    <div class="justify-content-center">*@
+@*      <table class="table">*@
+@*        <thead>*@
+@*        <tr>*@
+@*          <th scope="col">URL</th>*@
+@*          <th scope="col">HTTP Method</th>*@
+@*          <th scope="col">Required Header</th>*@
+@*          <th scope="col">Body</th>*@
+@*        </tr>*@
+@*        </thead>*@
+@*        <tbody>*@
+@*        <tr>*@
+@*          <th scope="row">/</th>*@
+@*          <td><code>GET</code></td>*@
+@*          <td>None</td>*@
+@*          <td>N/A</td>*@
+@*        </tr>*@
+@*          <tr>*@
+@*            <th scope="row">/api</th>*@
+@*            <td><code>GET</code></td>*@
+@*            <td>None</td>*@
+@*            <td>N/A</td>*@
+@*          </tr>*@
+@*        <tr>*@
+@*          <th scope="row">/create</th>*@
+@*          <td><code>POST</code></td>*@
+@*          <td>Content-Type: application/json</td>*@
+@*          <td><code>*@
+@*            "_id" : String*@
+@*            <br>*@
+@*            "name" : String*@
+@*            <br>*@
+@*            "description" : String*@
+@*            <br>*@
+@*            "pageCount" : Int*@
+@*          </code></td>*@
+@*        </tr>*@
+@*        <tr>*@
+@*          <th scope="row">/read/:id</th>*@
+@*          <td><code>GET</code></td>*@
+@*          <td>None</td>*@
+@*          <td>N/A</td>*@
+@*        </tr>*@
+@*        <tr>*@
+@*          <th scope="row">/update/:id</th>*@
+@*          <td><code>PUT</code></td>*@
+@*          <td>Content-Type: application/json</td>*@
+@*          <td><code>*@
+@*            "_id" : String*@
+@*            <br>*@
+@*            "name" : String*@
+@*            <br>*@
+@*            "description" : String*@
+@*            <br>*@
+@*            "pageCount" : Int*@
+@*          </code></td>*@
+@*        </tr>*@
+@*        <tr>*@
+@*          <th scope="row">/delete/:id</th>*@
+@*          <td><code>DELETE</code></td>*@
+@*          <td>Content-Type: application/json</td>*@
+@*          <td>N/A</td>*@
+@*        </tr>*@
+@*        </tbody>*@
+@*      </table>*@
+@*    </div>*@
+        </div>
+      </div>
+    </main>
+  </div>
 }

@@ -152,7 +152,7 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
       formData => {
         //here write how you would use this data to create a new book (DataModel)
         repService.create(formData).map { _ =>
-          Redirect(routes.ApplicationController.read(formData.id))
+          Ok(views.html.example(dataModel = formData))
         } recover
           { case _ => InternalServerError("Could not create the book")}
       }

@@ -26,7 +26,7 @@ class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuit
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("This is Anthos's first Play Scala project")
+      contentAsString(home) must include ("Play Scala Project")
     }
     /* his method ensures that the controller is provided with all its
     required dependencies as configured in the running Play application.
@@ -39,7 +39,7 @@ class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuit
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("This is Anthos's first Play Scala project")
+      contentAsString(home) must include ("Play Scala Project")
     }
 
     "render the index page from the router" in {
@@ -48,7 +48,7 @@ class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuit
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("This is Anthos's first Play Scala project")
+      contentAsString(home) must include ("Play Scala Project")
     }
   }
 }

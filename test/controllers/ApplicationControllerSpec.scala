@@ -36,7 +36,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with Injecting {
   - Note component comes from the BaseSpecWithApplication, it is created as an instance
   of controller components and injected into the Controller.
    */
-
+  ()
   private val dataModel: DataModel = DataModel (
     id = "abcd",
     volumeInfo = VolumeInfo("Game of Thrones", Some("Fiction Story"), Some(100)))
@@ -292,8 +292,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with Injecting {
           .withCSRFToken
 
       val result = TestApplicationController.addBookForm().apply(request)
-      status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.ApplicationController.read("1223").url)
+      status(result) mustBe OK
 
 //
 //      def errorFunc(badForm: Form[DataModel]) = {
