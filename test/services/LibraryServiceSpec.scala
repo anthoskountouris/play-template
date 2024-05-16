@@ -3,7 +3,7 @@ package services
 import baseSpec.BaseSpec
 import cats.data.EitherT
 import connectors.LibraryConnector
-import models.{APIError, Book}
+import models.{APIError, Book, DataModel}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -18,23 +18,25 @@ class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures wit
   val testService = new LibraryService(mockConnector)
 
   val gameOfThrones: JsValue = Json.obj(
-    "id" -> "someId",
-    "title" -> "A Game of Thrones",
-    "description" -> "The best book!!!",
-    "pageCount" -> 100
+    "id" -> "1",
+    "volumeInfo" -> Json.obj(
+      "title" -> "Book one",
+      "description" -> "Description one",
+      "pageCount" -> 200
+    )
   )
 
   "getGoogleBook" should {
     val url: String = "testUrl"
 
     "return a book" in {
-      (mockConnector.get[Book](_:String)(_: OFormat[Book], _: ExecutionContext))
+      (mockConnector.get[DataModel](_:String)(_: OFormat[DataModel], _: ExecutionContext))
         .expects(url, *, *)
-        .returning(EitherT.rightT(gameOfThrones.as[Book]))
+        .returning(EitherT.rightT(gameOfThrones.as[DataModel]))
         .once()
 
       whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) { result =>
-        result shouldBe Right(gameOfThrones.as[Book])
+        result shouldBe Right(gameOfThrones.as[DataModel])
       }
       /*
       Since we are expecting a future from the connector, it's best to use the whenReady
@@ -46,7 +48,7 @@ class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures wit
     "return an error" in {
       val url: String = "testurl"
 
-      (mockConnector.get[Book]( _:String)( _:OFormat[Book], _:ExecutionContext))
+      (mockConnector.get[DataModel]( _:String)( _:OFormat[DataModel], _:ExecutionContext))
         .expects(url, *, *)
         .returning(EitherT.leftT(APIError.BadAPIResponse(500, "Could not connect")))
         .once()

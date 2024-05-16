@@ -15,10 +15,6 @@ libraryDependencies ++= Seq(
   "org.typelevel" %% "cats-core" % "2.3.0"
 )
 
-//dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.11.0"
-
-//parallelExecution in Test := false
-
 lazy val root = (project in file("."))
   .settings(
     name := "play-template"

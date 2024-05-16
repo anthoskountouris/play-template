@@ -36,7 +36,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with Injecting {
   - Note component comes from the BaseSpecWithApplication, it is created as an instance
   of controller components and injected into the Controller.
    */
-  ()
+
   private val dataModel: DataModel = DataModel (
     id = "abcd",
     volumeInfo = VolumeInfo("Game of Thrones", Some("Fiction Story"), Some(100)))
@@ -234,7 +234,6 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with Injecting {
 //      afterEach()
     }
   }
-
 
 //
 //  override def beforeEach(): Unit = await(repository.deleteAll())
