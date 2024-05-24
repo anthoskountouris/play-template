@@ -1,0 +1,16 @@
+/*.custom-input {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    padding: 0.5rem;*/
+/*    margin-top: 0.5rem;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+.govuk-input {
+    margin-left: -40px;
+}
+
+.info {
+    margin-left: 0px;
+    color: #6b1c40;
+}

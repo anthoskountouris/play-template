@@ -26,16 +26,20 @@ class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuit
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
+      contentAsString(home) must include ("Play Scala Project")
     }
-
+    /* his method ensures that the controller is provided with all its
+    required dependencies as configured in the running Play application.
+    Since this test uses the application's injector, it is more of an
+    integration test than a unit test.
+     */
     "render the index page from the application" in {
       val controller = inject[HomeController]
       val home = controller.index().apply(FakeRequest(GET, "/"))
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
+      contentAsString(home) must include ("Play Scala Project")
     }
 
     "render the index page from the router" in {
@@ -44,7 +48,7 @@ class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuit
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
+      contentAsString(home) must include ("Play Scala Project")
     }
   }
 }

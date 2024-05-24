@@ -11,12 +11,9 @@ libraryDependencies ++= Seq(
   ws,
   "org.scalatest" %% "scalatest" % "3.2.15" % Test,
   "org.scalamock" %% "scalamock" % "5.2.0" % Test,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
+  "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test,
+  "org.typelevel" %% "cats-core" % "2.3.0"
 )
-
-//dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.11.0"
-
-//parallelExecution in Test := false
 
 lazy val root = (project in file("."))
   .settings(
