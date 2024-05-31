@@ -25,8 +25,8 @@ class RepositoryServiceSpec extends BaseSpec with MockFactory with ScalaFutures 
     "id" -> "1",
     "volumeInfo" -> Json.obj(
       "title" -> "Book one",
-      "description" -> "Description one",
-      "pageCount" -> 200
+      "description" -> "Description Two",
+      "pageCount" -> 100
     )
   )
 

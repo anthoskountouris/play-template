@@ -344,7 +344,9 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with Injecting {
   **** Manually testing the rest of the API ****
 
   CREATE (POST)
-  curl -H "Content-Type: application/json" -d '{ "_id" : "1", "name" : "testName", "description" : "testDescription", "pageCount" : 1 }' "localhost:9000/create" -i
+  curl -H "Content-Type: application/json"
+  -d '{ "_id" : "1", "name" : "testName", "description" : "testDescription", "pageCount" : 1 }'
+  "localhost:9000/create" -i
 
   READ (GET)
   curl localhost:9000/read/1

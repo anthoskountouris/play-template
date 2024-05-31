@@ -49,9 +49,11 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
   }
 
   def read(id:String) = Action.async { implicit request =>
-    repService.read(id).map{
-      case Right(item) => Ok {Json.toJson(item)}
-      case Left(_) => BadRequest{Json.toJson("Unable to find that book")}
+    repService.read(id).map {
+      case Right(item) => Ok {
+        Json.toJson(item)
+      }
+      case Left(_) => BadRequest(views.html.unableToFindBook(er = "Unable to find this book!"))
     }
   }
 
@@ -59,21 +61,21 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
     request.body.validate[DataModel] match {
       case JsSuccess(dataModel: DataModel, _) =>
         repService.update(id, dataModel).map(_ => Accepted{Json.toJson(dataModel)})
-      case JsError(_) => Future(BadRequest)
+      case JsError(_) => Future(BadRequest{views.html.unableToFindBook(er = "Something went wrong!")})
     }
   }
 
   def delete(id:String) = Action.async{ implicit request =>
     repService.delete(id).map {
       case Right(item) => Accepted("Book deleted successfully.")
-      case Left(_) => BadRequest
+      case Left(_) => BadRequest{Json.toJson("Something went wrong!")}
     }
   }
 
   def findByName(name:String): Action[AnyContent] = Action.async { implicit request =>
     repService.findByName(name).map{
       case Right(item) => Ok {Json.toJson(item)}
-      case Left(_) => BadRequest{Json.toJson("Unable to find that book")}
+      case Left(_) => BadRequest{views.html.unableToFindBook(er = "Unable to find that book")}
     }
   }
 
@@ -86,7 +88,7 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
 
   def updateByField(id: String, fieldName:String, value:String): Action[AnyContent] = Action.async { implicit request =>
     repService.updateByField(id, fieldName, value).map { case Right(_) => Accepted("Book updated successfully.")
-    case Left(_) => BadRequest(Json.toJson("Something went wrong"))
+    case Left(_) => BadRequest(views.html.unableToFindBook(er ="Something went wrong"))
     }
   }
 
@@ -103,15 +105,15 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
       case Right(book) =>
         Json.toJson(book.items.head).validate[DataModel] match {
           case JsSuccess(dataModel, _) =>
-            repService.create(dataModel).map(_ => Created)
-          case JsError(errors) =>
-            Future(BadRequest(Json.toJson("Invalid data model")))
+            repService.create(dataModel).map(_ => Created(views.html.example(dataModel = dataModel)))
+          case JsError(_) =>
+            Future(BadRequest(views.html.unableToFindBook(er = "Invalid data model")))
+//            Future(BadRequest(Json.toJson("Invalid data model")))
         }
       case Left(error) =>
-        Future(BadRequest(Json.toJson("Something went wrong")))
+        Future(BadRequest(views.html.unableToFindBook(er ="This book does not exist on Google Books API")))
     }
   }
-
 
 //  request.body.validate[DataModel] match {
 //    case JsSuccess(dataModel: DataModel, _) =>
@@ -154,7 +156,7 @@ class ApplicationController @Inject() (val controllerComponents: ControllerCompo
         repService.create(formData).map { _ =>
           Ok(views.html.example(dataModel = formData))
         } recover
-          { case _ => InternalServerError("Could not create the book")}
+          { case _ => InternalServerError(views.html.unableToFindBook(er ="Could not create the book"))}
       }
     )
   }
